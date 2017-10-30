@@ -103,7 +103,7 @@
 <meta property="og:description" content="spring 简介重要概念：控制反转与面向切面编程 依赖注入（DI）模式是控制反转的一个具体实现，控制反转（IOC）是一个通用的概念，它可以用很多不同的方式去表达，依赖注入是控制反转的一个具体例子。 Spring 框架的一个关键组件是 面向方面的程序设计（AOP）框架。一个程序中跨越多个点的功能被称为 横切关注点，这些横切关注点在概念上独立于应用程序的业务逻辑。有各种各样常见的很好的关于方面的例子">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ounxjk8d9.bkt.clouddn.com/spring_1.png">
-<meta property="og:updated_time" content="2017-08-14T07:24:21.372Z">
+<meta property="og:updated_time" content="2017-08-16T08:53:23.476Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring">
 <meta name="twitter:description" content="spring 简介重要概念：控制反转与面向切面编程 依赖注入（DI）模式是控制反转的一个具体实现，控制反转（IOC）是一个通用的概念，它可以用很多不同的方式去表达，依赖注入是控制反转的一个具体例子。 Spring 框架的一个关键组件是 面向方面的程序设计（AOP）框架。一个程序中跨越多个点的功能被称为 横切关注点，这些横切关注点在概念上独立于应用程序的业务逻辑。有各种各样常见的很好的关于方面的例子">
@@ -355,11 +355,26 @@
 <li>测试模块支持对具有 JUnit 或 TestNG 框架的 Spring 组件的测试。</li>
 </ol>
 <h3 id="IoC容器"><a href="#IoC容器" class="headerlink" title="IoC容器"></a>IoC容器</h3><h3 id="Spring-Bean"><a href="#Spring-Bean" class="headerlink" title="Spring Bean"></a>Spring Bean</h3><ol>
-<li>定义</li>
-<li>作用域</li>
-<li>生命周期</li>
-<li>后置处理器</li>
-<li>定义集成</li>
+<li><p>定义<br>被称作Bean 的对象是构成应用程序的支柱也是由Spring IoC容器管理的。<br>Bean 是一个被实例化，组装，并通过Spring IoC容器所管理的对象。<br>Bean 是由容器提供的配置元数据创建的，bean定义包含称为配置元数据的信息。<br>容器需要了解的配置元数据：</p>
+<ol>
+<li>如何创建一个Bean,即 ‘class’ 属性，声明创建Bean的类。</li>
+<li>Bean 的生命周期</li>
+<li>Bean 的依赖关系，即注入方式以及连线。<br>Spring配置元数据有3种方式<ol>
+<li>基于XML的配置文件</li>
+<li>基于注解的配置 </li>
+<li>基于Java的配置</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>作用域<br>Spring 支持五个作用域：<br>singleton：单一实例，默认<br>prototype：多实例<br>request：该作用域将 bean 的定义限制为 HTTP 请求。只在 web-aware Spring ApplicationContext 的上下文中有效。<br>session：该作用域将 bean 的定义限制为 HTTP 会话。 只在web-aware Spring ApplicationContext的上下文中有效。<br>global-session：该作用域将 bean 的定义限制为全局 HTTP 会话。只在 web-aware Spring ApplicationContext 的上下文中有效</p>
+</li>
+<li><p>生命周期<br>当一个Bean被实例化的时候，它可能需要执行一些初始化使它转换为可用状态。<br>当一个Bean不在需要，并且从容器中移除时，可能要需要做一些清除工作。</p>
+</li>
+<li><p>后置处理器</p>
+</li>
+<li><p>定义继承</p>
+</li>
 </ol>
 <h3 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h3><ol>
 <li>基于XML</li>
@@ -489,7 +504,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -502,7 +517,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

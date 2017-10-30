@@ -263,6 +263,274 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/30/js-classAndModule/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mark">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mark">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/30/js-classAndModule/" itemprop="url">JavaScript 类和模块</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-30T11:18:53+08:00">
+                2017-10-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="对象，类和原型"><a href="#对象，类和原型" class="headerlink" title="对象，类和原型"></a>对象，类和原型</h1><h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>JavaScript 中的对象可以简单理解成“名称-值”对。</p>
+<p>创建对象的2种方式:</p>
+<ol>
+<li><p>对象字面量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var obj = &#123;&#125;;</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用new关键字和构造函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var obj = new Object();</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>下面一个例子是创建对象原型以及其实例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">function Person(name, age) &#123;</div><div class="line">	this.name = name;</div><div class="line">	this.age = age;</div><div class="line">	this.fullName = function() &#123;</div><div class="line">		return this.first + &quot; &quot; + this.last; </div><div class="line">	&#125;</div><div class="line">	this.fullNameReversed = function() &#123;</div><div class="line">        return this.last + &apos;, &apos; + this.first;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">//定义一个对象</div><div class="line">var You = new Person(&quot;Tom&quot;, 18);</div><div class="line">//访问对象属性</div><div class="line">You.name = &quot;Jack&quot;;</div><div class="line">var name = You.name;</div></pre></td></tr></table></figure></p>
+<p>自定义对象</p>
+<h2 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h2><p>每一个JavaScript对象(null除外)都和另一个对象想关联，这个对象就是原型，每个对象都从原型继承属性。</p>
+<p>当使用对象直接量创建对象时，对象具有一个原型对象，可以通过JavaScript代码Object.prototype获得原型对象的引用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var o1 = &#123;x:1,y:2&#125;  </div><div class="line">o1.__proto__;    //获取对象的原型对象</div></pre></td></tr></table></figure></p>
+<p>当通过关键字new和构造函数调用创建的对象的原型就是构造函数的prototype属性的值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var o2 = new Object(&#123;x:1,y:2&#125;);</div><div class="line">o2.constructor.prototype;  //</div><div class="line">o2.__proto__;     //也可通过这种方式获得原型对象</div></pre></td></tr></table></figure></p>
+<p>无论什么时候，只要创建了一个新对象，就会根据一组特定的规则为该函数创建一个prototype,这个属性指向函数的原型对象。<br>在默认情况下，所有原型对象都会自动获得一个constructor属性，这个属性包含一个指向prototype属性所在函数的指针。</p>
+<p>下面一个基于原型实现的面向对象:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">function Person(first, last) &#123;</div><div class="line">    this.first = first;</div><div class="line">    this.last = last;</div><div class="line">&#125;</div><div class="line">Person.prototype.fullName = function() &#123;</div><div class="line">    return this.first + &apos; &apos; + this.last;</div><div class="line">&#125;</div><div class="line">Person.prototype.fullNameReversed = function() &#123;</div><div class="line">    return this.last + &apos;, &apos; + this.first;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>原型对象是类的唯一标识</p>
+<h1 id="类和类型"><a href="#类和类型" class="headerlink" title="类和类型"></a>类和类型</h1><ol>
+<li>使用instanceof运算符检测对象是否属于指定的类名</li>
+<li>使用constructor识别对象属于某个类</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/19/maven简介/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mark">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mark">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/19/maven简介/" itemprop="url">maven简介</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-19T09:56:42+08:00">
+                2017-08-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="何为maven"><a href="#何为maven" class="headerlink" title="何为maven"></a>何为maven</h2><ol>
+<li>maven 主要服务于基于Java平台的项目构建，依赖管理和项目信息管理。</li>
+<li>mavan 的用途之一是服务于构建，它是一个异常强大的构建工具，能够帮助我们<br>自动化构建过程，从清理，编译，测试到生成报告，再到打包和部署。</li>
+<li>maven能帮助我们标准化构建过程。</li>
+<li>mavan提供了中央仓库，能帮我们自动下载构件。</li>
+<li>maven通过一个坐标系统准备的定位每一个构件，我们可以借助它管理依赖。</li>
+<li>maven还能帮我们管理项目信息。如项目描述，开发者列表，版本控制系统地址等。</li>
+</ol>
+<h2 id="为什么需要maven"><a href="#为什么需要maven" class="headerlink" title="为什么需要maven"></a>为什么需要maven</h2><h2 id="maven-与极限编程"><a href="#maven-与极限编程" class="headerlink" title="maven 与极限编程"></a>maven 与极限编程</h2><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/14/spring-mvc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -476,11 +744,26 @@
 <li>测试模块支持对具有 JUnit 或 TestNG 框架的 Spring 组件的测试。</li>
 </ol>
 <h3 id="IoC容器"><a href="#IoC容器" class="headerlink" title="IoC容器"></a>IoC容器</h3><h3 id="Spring-Bean"><a href="#Spring-Bean" class="headerlink" title="Spring Bean"></a>Spring Bean</h3><ol>
-<li>定义</li>
-<li>作用域</li>
-<li>生命周期</li>
-<li>后置处理器</li>
-<li>定义集成</li>
+<li><p>定义<br>被称作Bean 的对象是构成应用程序的支柱也是由Spring IoC容器管理的。<br>Bean 是一个被实例化，组装，并通过Spring IoC容器所管理的对象。<br>Bean 是由容器提供的配置元数据创建的，bean定义包含称为配置元数据的信息。<br>容器需要了解的配置元数据：</p>
+<ol>
+<li>如何创建一个Bean,即 ‘class’ 属性，声明创建Bean的类。</li>
+<li>Bean 的生命周期</li>
+<li>Bean 的依赖关系，即注入方式以及连线。<br>Spring配置元数据有3种方式<ol>
+<li>基于XML的配置文件</li>
+<li>基于注解的配置 </li>
+<li>基于Java的配置</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>作用域<br>Spring 支持五个作用域：<br>singleton：单一实例，默认<br>prototype：多实例<br>request：该作用域将 bean 的定义限制为 HTTP 请求。只在 web-aware Spring ApplicationContext 的上下文中有效。<br>session：该作用域将 bean 的定义限制为 HTTP 会话。 只在web-aware Spring ApplicationContext的上下文中有效。<br>global-session：该作用域将 bean 的定义限制为全局 HTTP 会话。只在 web-aware Spring ApplicationContext 的上下文中有效</p>
+</li>
+<li><p>生命周期<br>当一个Bean被实例化的时候，它可能需要执行一些初始化使它转换为可用状态。<br>当一个Bean不在需要，并且从容器中移除时，可能要需要做一些清除工作。</p>
+</li>
+<li><p>后置处理器</p>
+</li>
+<li><p>定义继承</p>
+</li>
 </ol>
 <h3 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h3><ol>
 <li>基于XML</li>
@@ -826,7 +1109,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -839,7 +1122,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
